@@ -91,6 +91,44 @@
             font-family: monospace;
         }
 
+        /* Estilo para a caixa de seleção */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 16px; /* Tamanho da fonte */
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            display: none; /* Oculta a caixa de seleção padrão */
+        }
+
+        .custom-checkbox {
+            width: 15px; /* Largura da caixa de seleção */
+            height: 15px; /* Altura da caixa de seleção */
+            border: 1px solid #b3d9ff;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            background-color: #f2f9ff;
+            margin-right: 5px; /* Espaço entre a caixa e o texto */
+        }
+
+        .custom-checkbox::after {
+            content: '';
+            position: absolute;
+            top: 2px; /* Ajusta a posição vertical da marca */
+            left: 2px; /* Ajusta a posição horizontal da marca */
+            width: 10px; /* Largura da marca */
+            height: 10px; /* Altura da marca */
+            background-color: blue; /* Cor do check */
+            display: none; /* Exibe a marca quando a caixa está selecionada */
+        }
+
+        .checkbox-group input[type="checkbox"]:checked + .custom-checkbox::after {
+            display: block; /* Exibe a marca quando a caixa é selecionada */
+        }
+
         /* Media Queries para responsividade */
         @media (max-width: 600px) {
             form {
@@ -115,7 +153,11 @@
 
 <form id="chamadoForm">
     <label for="periodo">PERIODO:</label>
-    <input type="text" id="periodo" name="periodo">
+    <select id="periodo" name="periodo">
+        <option value="MANHÃ">MANHÃ</option>
+        <option value="TARDE">TARDE</option>
+        <option value="INDIFERENTE">INDIFERENTE</option>
+    </select>
 
     <label for="ca">CA:</label>
     <input type="text" id="ca" name="ca">
@@ -150,6 +192,12 @@
         <option value="72">72 horas úteis</option>
         <option value="7-15">7 a 15 dias</option>
     </select>
+
+    <div class="checkbox-group">
+        <input type="checkbox" id="trocaEndereco" name="trocaEndereco">
+        <label for="trocaEndereco" class="custom-checkbox"></label>
+        <span>INSTALAÇÃO / TROCA DE ENDEREÇO</span>
+    </div>
 
     <div class="button-group">
         <button type="button" onclick="gerarChamado()">Gerar Chamado e Copiar</button>
@@ -186,22 +234,24 @@
     }
 
     function gerarChamado() {
-        const periodo = removerAcentosECaracteresEspeciais(document.getElementById('periodo').value.toUpperCase());
+        const periodo = document.getElementById('periodo').value.toUpperCase();
         const ca = removerAcentosECaracteresEspeciais(document.getElementById('ca').value.toUpperCase());
         const id = removerAcentosECaracteresEspeciais(document.getElementById('id').value.toUpperCase());
-        const pppoe = document.getElementById('pppoe').value; // Não convertendo para maiúsculas
+        const pppoe = removerAcentosECaracteresEspeciais(document.getElementById('pppoe').value.toUpperCase());
         const nome_cliente = removerAcentosECaracteresEspeciais(document.getElementById('nome_cliente').value.toUpperCase());
         const endereco = removerAcentosECaracteresEspeciais(document.getElementById('endereco').value.toUpperCase());
         const referencia = removerAcentosECaracteresEspeciais(document.getElementById('referencia').value.toUpperCase());
-        const telefone = removerAcentosECaracteresEspeciais(document.getElementById('telefone').value.toUpperCase());
+        const telefone = removerAcentosECaracteresEspeciais(document.getElementById('telefone').value);
         const potencia = removerAcentosECaracteresEspeciais(document.getElementById('potencia').value.toUpperCase());
         const descricao = removerAcentosECaracteresEspeciais(document.getElementById('descricao').value.toUpperCase());
         const prazo = document.getElementById('prazo').value;
 
-        // Ajuste para o texto do prazo
-        const prazoTexto = prazo === "7-15" ? "7 a 15 dias" : prazo + "H ÚTEIS";
+        const trocaEndereco = document.getElementById('trocaEndereco').checked;
 
-        const chamado = `
+        // Atualizando a mensagem de prazo para refletir o que foi selecionado
+        const prazoTexto = `CLIENTE CIENTE DO PRAZO MÁXIMO DE ${prazo} ÚTEIS E CUSTOS DA VISITA TÉCNICA DE R$50,00 A HORA TÉCNICA E MATERIAIS SE NECESSÁRIO`;
+
+        let chamado = `
 PERIODO: ${periodo} _____
 CA: ${ca} _____
 ID: ${id} _____
@@ -213,9 +263,23 @@ TELEFONE PARA CONTATO: ${telefone} _____
 POTENCIA: ${potencia} _____
 
 DESCRIÇÃO: ${descricao} _____
-
-____CLIENTE CIENTE DO PRAZO MÁXIMO ${prazoTexto} E CUSTOS DA VISITA TÉCNICA DE R$50,00 A HORA TÉCNICA E MATERIAIS SE NECESSÁRIO____
 `;
+
+        // Remover a mensagem de prazo se a opção de troca de endereço for selecionada
+        if (!trocaEndereco) {
+            chamado += `____${prazoTexto}____\n`;
+        }
+
+        if (trocaEndereco) {
+            chamado += `
+O CONTRATANTE DECLARA PARA TODOS OS FINS DE DIREITO QUE OS
+SERVIÇOS SOLICITADOS FORAM ATIVADOS/INSTALADOS NA PRESENTE DATA,
+ESTANDO EM PERFEITO FUNCIONAMENTO. O CONTRATANTE DECLARA TAMBÉM
+QUE TESTOU E APROVOU OS SERVIÇOS CONTRATADOS E DIANTE DISSO O
+CONTRATANTE RENUNCIA O DIREITO DE ARREPENDIMENTO, PREVISTO NO ART. 49
+DA LEI 8078
+`;
+        }
 
         const resultadoElement = document.getElementById('resultado');
         resultadoElement.textContent = chamado;
