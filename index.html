@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abertura de Chamado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #003366;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #003366;
+            margin-bottom: 30px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 100px; /* Ajuste o tamanho do logo */
+        }
+        .subtitulo {
+            text-align: center;
+            font-size: 24px;
+            color: #007acc;
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #e6f2ff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+            color: #004080;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #b3d9ff;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #f2f9ff;
+        }
+        button {
+            width: 48%;
+            padding: 15px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #005c99;
+        }
+        #resetButton {
+            background-color: #e60000;
+        }
+        #resetButton:hover {
+            background-color: #cc0000;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        p {
+            white-space: pre-line;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #resultado {
+            background-color: #ffffff;
+            border: 1px solid #007acc;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+<div class="logo">
+    <img src="/SEÇÃO 05/SNINTERNET/logosninternet.png" alt="Logo SN INTERNET"> <!-- Caminho do logo -->
+</div>
+<h1>SN INTERNET</h1>
+
+<form id="chamadoForm">
+    <label for="periodo">PERIODO:</label>
+    <input type="text" id="periodo" name="periodo">
+
+    <label for="ca">CA:</label>
+    <input type="text" id="ca" name="ca">
+
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id">
+
+    <label for="pppoe">PPPOE:</label>
+    <input type="text" id="pppoe" name="pppoe">
+
+    <label for="nome_cliente">NOME CLIENTE:</label>
+    <input type="text" id="nome_cliente" name="nome_cliente">
+
+    <label for="endereco">ENDEREÇO:</label>
+    <input type="text" id="endereco" name="endereco">
+
+    <label for="referencia">PONTO DE REFERÊNCIA:</label>
+    <input type="text" id="referencia" name="referencia">
+
+    <label for="telefone">TELEFONE PARA CONTATO:</label>
+    <input type="text" id="telefone" name="telefone">
+
+    <label for="potencia">POTENCIA:</label>
+    <input type="text" id="potencia" name="potencia">
+
+    <label for="descricao">DESCRIÇÃO:</label>
+    <textarea id="descricao" name="descricao" rows="4"></textarea>
+
+    <label for="prazo">Prazo Máximo de Atendimento:</label>
+    <select id="prazo" name="prazo">
+        <option value="48">48 horas úteis</option>
+        <option value="72">72 horas úteis</option>
+        <option value="7-15">7 a 15 dias</option>
+    </select>
+
+    <div class="button-group">
+        <button type="button" onclick="gerarChamado()">Gerar Chamado e Copiar</button>
+        <button type="button" id="resetButton" onclick="limparFormulario()">Limpar Formulário</button>
+    </div>
+</form>
+
+<p id="resultado"></p>
+
+<script>
+    function removerAcentosECaracteresEspeciais(str) {
+        const acentos = [
+            { base: 'A', letras: /[ÀÁÂÃÄ]/g },
+            { base: 'E', letras: /[ÈÉÊË]/g },
+            { base: 'I', letras: /[ÌÍÎÏ]/g },
+            { base: 'O', letras: /[ÒÓÔÕÖ]/g },
+            { base: 'U', letras: /[ÙÚÛÜ]/g },
+            { base: 'C', letras: /[Ç]/g },
+            { base: 'N', letras: /[Ñ]/g },
+            { base: 'a', letras: /[àáâãä]/g },
+            { base: 'e', letras: /[èéêë]/g },
+            { base: 'i', letras: /[ìíîï]/g },
+            { base: 'o', letras: /[òóôõö]/g },
+            { base: 'u', letras: /[ùúûü]/g },
+            { base: 'c', letras: /[ç]/g },
+            { base: 'n', letras: /[ñ]/g }
+        ];
+
+        acentos.forEach(acento => {
+            str = str.replace(acento.letras, acento.base);
+        });
+
+        return str;
+    }
+
+    function gerarChamado() {
+        const periodo = removerAcentosECaracteresEspeciais(document.getElementById('periodo').value.toUpperCase());
+        const ca = removerAcentosECaracteresEspeciais(document.getElementById('ca').value.toUpperCase());
+        const id = removerAcentosECaracteresEspeciais(document.getElementById('id').value.toUpperCase());
+        const pppoe = document.getElementById('pppoe').value; // Não convertendo para maiúsculas
+        const nome_cliente = removerAcentosECaracteresEspeciais(document.getElementById('nome_cliente').value.toUpperCase());
+        const endereco = removerAcentosECaracteresEspeciais(document.getElementById('endereco').value.toUpperCase());
+        const referencia = removerAcentosECaracteresEspeciais(document.getElementById('referencia').value.toUpperCase());
+        const telefone = removerAcentosECaracteresEspeciais(document.getElementById('telefone').value.toUpperCase());
+        const potencia = removerAcentosECaracteresEspeciais(document.getElementById('potencia').value.toUpperCase());
+        const descricao = removerAcentosECaracteresEspeciais(document.getElementById('descricao').value.toUpperCase());
+        const prazo = document.getElementById('prazo').value;
+
+        // Ajuste para o texto do prazo
+        const prazoTexto = prazo === "7-15" ? "7 a 15 dias" : prazo + "H ÚTEIS";
+
+        const chamado = `
+PERIODO: ${periodo} _____
+CA: ${ca} _____
+ID: ${id} _____
+PPPOE: ${pppoe} _____
+NOME CLIENTE: ${nome_cliente} _____
+ENDEREÇO: ${endereco} _____
+PONTO DE REFERÊNCIA: ${referencia} _____
+TELEFONE PARA CONTATO: ${telefone} _____
+POTENCIA: ${potencia} _____
+
+DESCRIÇÃO: ${descricao} _____
+
+____CLIENTE CIENTE DO PRAZO MÁXIMO ${prazoTexto} E CUSTOS DA VISITA TÉCNICA DE R$50,00 A HORA TÉCNICA E MATERIAIS SE NECESSÁRIO____
+`;
+
+        const resultadoElement = document.getElementById('resultado');
+        resultadoElement.textContent = chamado;
+
+        // Copiar para a área de transferência sem alert
+        navigator.clipboard.writeText(chamado);
+    }
+
+    function limparFormulario() {
+        document.getElementById('chamadoForm').reset();
+        document.getElementById('resultado').textContent = '';
+    }
+</script>
+
+</body>
+</html>
