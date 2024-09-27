@@ -1,0 +1,136 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    color: #003366;
+    margin: 0;
+    padding: 20px;
+}
+h1 {
+    text-align: center;
+    color: #003366;
+    margin-bottom: 30px;
+}
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.logo img {
+    max-width: 100px; /* Ajuste o tamanho do logo */
+}
+.subtitulo {
+    text-align: center;
+    font-size: 24px;
+    color: #007acc;
+    margin-bottom: 20px;
+}
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #e6f2ff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+label {
+    font-weight: bold;
+    color: #004080;
+}
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #b3d9ff;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #f2f9ff;
+}
+button {
+    width: 48%;
+    padding: 15px;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+button:hover {
+    background-color: #005c99;
+}
+#resetButton {
+    background-color: #e60000;
+}
+#resetButton:hover {
+    background-color: #cc0000;
+}
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
+p {
+    white-space: pre-line;
+    margin-top: 20px;
+    font-weight: bold;
+}
+#resultado {
+    background-color: #ffffff;
+    border: 1px solid #007acc;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+    font-family: monospace;
+}
+
+/* Estilo para a caixa de seleção */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 16px; /* Tamanho da fonte */
+}
+
+.checkbox-group input[type="checkbox"] {
+    display: none; /* Oculta a caixa de seleção padrão */
+}
+
+.custom-checkbox {
+    width: 15px; /* Largura da caixa de seleção */
+    height: 15px; /* Altura da caixa de seleção */
+    border: 1px solid #b3d9ff;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    background-color: #f2f9ff;
+    margin-right: 5px; /* Espaço entre a caixa e o texto */
+}
+
+.custom-checkbox::after {
+    content: '';
+    position: absolute;
+    top: 2px; /* Ajusta a posição vertical da marca */
+    left: 2px; /* Ajusta a posição horizontal da marca */
+    width: 10px; /* Largura da marca */
+    height: 10px; /* Altura da marca */
+    background-color: blue; /* Cor do check */
+    display: none; /* Exibe a marca quando a caixa está selecionada */
+}
+
+.checkbox-group input[type="checkbox"]:checked + .custom-checkbox::after {
+    display: block; /* Exibe a marca quando a caixa é selecionada */
+}
+
+/* Media Queries para responsividade */
+@media (max-width: 600px) {
+    form {
+        padding: 15px;
+    }
+    button {
+        width: 100%;
+        margin: 10px 0;
+    }
+    .button-group {
+        flex-direction: column;
+    }
+}
