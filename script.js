@@ -27,7 +27,7 @@ function gerarChamado() {
     const periodo = document.getElementById('periodo').value.toUpperCase();
     const ca = removerAcentosECaracteresEspeciais(document.getElementById('ca').value.toUpperCase());
     const id = removerAcentosECaracteresEspeciais(document.getElementById('id').value.toUpperCase());
-    const pppoe = (document.getElementById('pppoe'));
+    const pppoe = removerAcentosECaracteresEspeciais(document.getElementById('pppoe').value.toUpperCase());
     const nome_cliente = removerAcentosECaracteresEspeciais(document.getElementById('nome_cliente').value.toUpperCase());
     const endereco = removerAcentosECaracteresEspeciais(document.getElementById('endereco').value.toUpperCase());
     const referencia = removerAcentosECaracteresEspeciais(document.getElementById('referencia').value.toUpperCase());
