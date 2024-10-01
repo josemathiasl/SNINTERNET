@@ -25,9 +25,10 @@ function removerAcentosECaracteresEspeciais(str) {
 
 function gerarChamado() {
     const periodo = document.getElementById('periodo').value.toUpperCase();
-    const ca = removerAcentosECaracteresEspeciais(document.getElementById('ca').value.toUpperCase());
+    const caFtta = document.getElementById('ca-ftta').value.toUpperCase();
+    const caFttaText = removerAcentosECaracteresEspeciais(document.getElementById('ca-ftta-text').value.toUpperCase());
     const id = removerAcentosECaracteresEspeciais(document.getElementById('id').value.toUpperCase());
-    const pppoe = removerAcentosECaracteresEspeciais(document.getElementById('pppoe').value.toUpperCase());
+    const pppoe = document.getElementById('pppoe').value;
     const nome_cliente = removerAcentosECaracteresEspeciais(document.getElementById('nome_cliente').value.toUpperCase());
     const endereco = removerAcentosECaracteresEspeciais(document.getElementById('endereco').value.toUpperCase());
     const referencia = removerAcentosECaracteresEspeciais(document.getElementById('referencia').value.toUpperCase());
@@ -38,26 +39,26 @@ function gerarChamado() {
 
     const trocaEndereco = document.getElementById('trocaEndereco').checked;
 
-    // Atualizando a mensagem de prazo para refletir o que foi selecionado
-    const prazoTexto = `CLIENTE CIENTE DO PRAZO MÁXIMO DE ${prazo} ÚTEIS E CUSTOS DA VISITA TÉCNICA DE R$50,00 A HORA TÉCNICA E MATERIAIS SE NECESSÁRIO`;
+    // Mensagem padrão para todas as opções de prazo
+    const custoTexto = `CLIENTE CIENTE DO PRAZO MÁXIMO DE ${prazo} E CUSTOS DA VISITA TÉCNICA DE R$50,00 A HORA TÉCNICA E MATERIAIS SE NECESSÁRIO`;
 
     let chamado = `
 PERIODO: ${periodo} _____
-CA: ${ca} _____
+${caFtta}: ${caFttaText} _____
 ID: ${id} _____
 PPPOE: ${pppoe} _____
 NOME CLIENTE: ${nome_cliente} _____
 ENDEREÇO: ${endereco} _____
 PONTO DE REFERÊNCIA: ${referencia} _____
 TELEFONE PARA CONTATO: ${telefone} _____
-POTENCIA: ${potencia} _____
+POTÊNCIA: ${potencia} _____
 
 DESCRIÇÃO: ${descricao} _____
 `;
 
-    // Remover a mensagem de prazo se a opção de troca de endereço for selecionada
+    // Verificação se a troca de endereço está selecionada
     if (!trocaEndereco) {
-        chamado += `____${prazoTexto}____\n`;
+        chamado += `____${custoTexto}____\n`;
     }
 
     if (trocaEndereco) {
@@ -74,10 +75,7 @@ DA LEI 8078
     const resultadoElement = document.getElementById('resultado');
     resultadoElement.textContent = chamado;
 
-    // Copiar para a área de transferência sem alert
-    navigator.clipboard.writeText(chamado);
-
-    // Confirmação visual de que o chamado foi copiado com sucesso/falhou
+    // Copiar para a área de transferência
     navigator.clipboard.writeText(chamado).then(() => {
         alert('Chamado gerado e copiado para a área de transferência!');
     }, () => {
