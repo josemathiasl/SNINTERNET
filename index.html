@@ -22,8 +22,12 @@
         <option value="INDIFERENTE">INDIFERENTE</option>
     </select>
 
-    <label for="ca">CA:</label>
-    <input type="text" id="ca" name="ca" required>
+    <label for="ca-ftta">CA/FTTA:</label>
+    <select id="ca-ftta" name="ca-ftta">
+        <option value="CA">CA</option>
+        <option value="FTTA">FTTA</option>
+    </select>
+    <input type="text" id="ca-ftta-text" name="ca-ftta-text" placeholder="Texto adicional" required>
 
     <label for="id">ID:</label>
     <input type="text" id="id" name="id" required>
@@ -51,9 +55,9 @@
 
     <label for="prazo">Prazo Máximo de Atendimento:</label>
     <select id="prazo" name="prazo">
-        <option value="48">48 horas úteis</option>
-        <option value="72">72 horas úteis</option>
-        <option value="7-15">7 a 15 dias</option>
+        <option value="48 HORAS ÚTEIS">48 horas úteis</option>
+        <option value="72 HORAS ÚTEIS">72 horas úteis</option>
+        <option value="7 a 15 DIAS">7 a 15 dias</option>
     </select>
 
     <div class="checkbox-group">
