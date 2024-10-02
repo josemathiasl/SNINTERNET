@@ -39,11 +39,26 @@ function gerarChamado() {
 
     const trocaEndereco = document.getElementById('trocaEndereco').checked;
 
+    // Campos adicionais se a troca de endereço for selecionada
+    const plano_cliente = removerAcentosECaracteresEspeciais(document.getElementById('plano_cliente').value.toUpperCase());
+    const cto_proxima_1 = removerAcentosECaracteresEspeciais(document.getElementById('cto_proxima_1').value.toUpperCase());
+    const distancia_1 = document.getElementById('distancia_1').value;
+    const cto_proxima_2 = removerAcentosECaracteresEspeciais(document.getElementById('cto_proxima_2').value.toUpperCase());
+    const distancia_2 = document.getElementById('distancia_2').value;
+    const cto_proxima_3 = removerAcentosECaracteresEspeciais(document.getElementById('cto_proxima_3').value.toUpperCase());
+    const distancia_3 = document.getElementById('distancia_3').value;
+    const login = removerAcentosECaracteresEspeciais(document.getElementById('login').value.toUpperCase());
+    const senha = removerAcentosECaracteresEspeciais(document.getElementById('senha').value);
+    const equipamentos_comodato = document.getElementById('equipamentos_comodato').value;
+    const tipo_equipamento = removerAcentosECaracteresEspeciais(document.getElementById('tipo_equipamento').value.toUpperCase());
+    const taxa_instalacao = document.getElementById('taxa_instalacao').value;
+    const parcelas = document.getElementById('parcelas').value;
+
     // Mensagem padrão para todas as opções de prazo
     const custoTexto = `CLIENTE CIENTE DO PRAZO MÁXIMO DE ${prazo} E CUSTOS DA VISITA TÉCNICA DE R$50,00 A HORA TÉCNICA E MATERIAIS SE NECESSÁRIO`;
 
     let chamado = `
-PERIODO: ${periodo} _____
+PERÍODO: ${periodo} _____
 ${caFtta}: ${caFttaText} _____
 ID: ${id} _____
 PPPOE: ${pppoe} _____
@@ -57,12 +72,18 @@ DESCRIÇÃO: ${descricao} _____
 `;
 
     // Verificação se a troca de endereço está selecionada
-    if (!trocaEndereco) {
-        chamado += `____${custoTexto}____\n`;
-    }
-
     if (trocaEndereco) {
         chamado += `
+PLANO CLIENTE: ${plano_cliente} MB_____
+CTO PRÓXIMA 1: ${cto_proxima_1} DISTÂNCIA: ${distancia_1} METROS_____
+CTO PRÓXIMA 2: ${cto_proxima_2} DISTÂNCIA: ${distancia_2} _____
+CTO PRÓXIMA 3: ${cto_proxima_3} DISTÂNCIA: ${distancia_3} _____
+LOGIN: ${login} _____
+SENHA: ${senha} _____
+EQUIPAMENTOS EM COMODATO: ${equipamentos_comodato} _____
+${equipamentos_comodato === "SIM" ? `TIPO DE EQUIPAMENTO: ${tipo_equipamento} _____` : ""}
+TAXA DE INSTALAÇÃO: R$${taxa_instalacao} (${parcelas}) _____
+
 O CONTRATANTE DECLARA PARA TODOS OS FINS DE DIREITO QUE OS
 SERVIÇOS SOLICITADOS FORAM ATIVADOS/INSTALADOS NA PRESENTE DATA,
 ESTANDO EM PERFEITO FUNCIONAMENTO. O CONTRATANTE DECLARA TAMBÉM
@@ -70,6 +91,9 @@ QUE TESTOU E APROVOU OS SERVIÇOS CONTRATADOS E DIANTE DISSO O
 CONTRATANTE RENUNCIA O DIREITO DE ARREPENDIMENTO, PREVISTO NO ART. 49
 DA LEI 8078
 `;
+
+    } else {
+        chamado += `____${custoTexto}____\n`;
     }
 
     const resultadoElement = document.getElementById('resultado');
@@ -86,4 +110,14 @@ DA LEI 8078
 function limparFormulario() {
     document.getElementById('chamadoForm').reset();
     document.getElementById('resultado').textContent = '';
+}
+
+function toggleOpcoesAdicionais() {
+    const opcoesAdicionais = document.getElementById('opcoesAdicionais');
+    opcoesAdicionais.style.display = document.getElementById('trocaEndereco').checked ? 'block' : 'none';
+}
+
+function toggleTipoEquipamento() {
+    const tipoEquipamento = document.getElementById('tipoEquipamento');
+    tipoEquipamento.style.display = document.getElementById('equipamentos_comodato').value === 'SIM' ? 'block' : 'none';
 }
