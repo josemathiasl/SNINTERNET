@@ -61,9 +61,69 @@
     </select>
 
     <div class="checkbox-group">
-        <input type="checkbox" id="trocaEndereco" name="trocaEndereco">
+        <input type="checkbox" id="trocaEndereco" name="trocaEndereco" onclick="toggleOpcoesAdicionais()">
         <label for="trocaEndereco" class="custom-checkbox"></label>
         <span>INSTALAÇÃO / TROCA DE ENDEREÇO</span>
+    </div>
+
+    <div id="opcoesAdicionais" style="display:none;">
+        <label for="plano_cliente">PLANO CLIENTE MB:</label>
+        <input type="text" id="plano_cliente" name="plano_cliente">
+
+        <div class="cto-distancia">
+            <label for="cto_proxima_1">CTO PRÓXIMA 1:</label>
+            <input type="text" id="cto_proxima_1" name="cto_proxima_1">
+            <label for="distancia_1">DISTÂNCIA:</label>
+            <input type="text" id="distancia_1" name="distancia_1">
+        </div>
+
+        <div class="cto-distancia">
+            <label for="cto_proxima_2">CTO PRÓXIMA 2:</label>
+            <input type="text" id="cto_proxima_2" name="cto_proxima_2">
+            <label for="distancia_2">DISTÂNCIA:</label>
+            <input type="text" id="distancia_2" name="distancia_2">
+        </div>
+
+        <div class="cto-distancia">
+            <label for="cto_proxima_3">CTO PRÓXIMA 3:</label>
+            <input type="text" id="cto_proxima_3" name="cto_proxima_3">
+            <label for="distancia_3">DISTÂNCIA:</label>
+            <input type="text" id="distancia_3" name="distancia_3">
+        </div>
+
+        <label for="login">LOGIN:</label>
+        <input type="text" id="login" name="login">
+
+        <label for="senha">SENHA:</label>
+        <input type="text" id="senha" name="senha">
+
+        <label for="equipamentos_comodato">EQUIPAMENTOS EM COMODATO:</label>
+        <select id="equipamentos_comodato" name="equipamentos_comodato" onchange="toggleTipoEquipamento()">
+            <option value="NÃO">NÃO</option>
+            <option value="SIM">SIM</option>
+        </select>
+        
+        <div id="tipoEquipamento" style="display:none;">
+            <label for="tipo_equipamento">TIPO DE EQUIPAMENTO:</label>
+            <input type="text" id="tipo_equipamento" name="tipo_equipamento">
+        </div>
+
+        <label for="taxa_instalacao">TAXA DE INSTALAÇÃO (R$):</label>
+        <input type="text" id="taxa_instalacao" name="taxa_instalacao">
+
+        <label for="parcelas">PARCELAS:</label>
+        <select id="parcelas" name="parcelas">
+            <option value="1X">1X</option>
+            <option value="2X">2X</option>
+            <option value="3X">3X</option>
+            <option value="4X">4X</option>
+            <option value="5X">5X</option>
+            <option value="6X">6X</option>
+            <option value="7X">7X</option>
+            <option value="8X">8X</option>
+            <option value="9X">9X</option>
+            <option value="10X">10X</option>
+        </select>
     </div>
 
     <div class="button-group">
@@ -75,6 +135,23 @@
 <p id="resultado"></p>
 
 <script src="script.js"></script>
+
+<style>
+    .cto-distancia {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .cto-distancia label {
+        margin-right: 10px;
+    }
+
+    .cto-distancia input {
+        margin-right: 20px;
+        flex: 1;
+    }
+</style>
 
 </body>
 </html>
