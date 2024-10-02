@@ -76,8 +76,8 @@ DESCRIÇÃO: ${descricao} _____
         chamado += `
 PLANO CLIENTE: ${plano_cliente} MB_____
 CTO PRÓXIMA 1: ${cto_proxima_1} DISTÂNCIA: ${distancia_1} METROS_____
-CTO PRÓXIMA 2: ${cto_proxima_2} DISTÂNCIA: ${distancia_2} _____
-CTO PRÓXIMA 3: ${cto_proxima_3} DISTÂNCIA: ${distancia_3} _____
+CTO PRÓXIMA 2: ${cto_proxima_2} DISTÂNCIA: ${distancia_2} METROS_____
+CTO PRÓXIMA 3: ${cto_proxima_3} DISTÂNCIA: ${distancia_3} METROS_____
 LOGIN: ${login} _____
 SENHA: ${senha} _____
 EQUIPAMENTOS EM COMODATO: ${equipamentos_comodato} _____
