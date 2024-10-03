@@ -82,7 +82,7 @@ LOGIN: ${login} _____
 SENHA: ${senha} _____
 EQUIPAMENTOS EM COMODATO: ${equipamentos_comodato} _____
 ${equipamentos_comodato === "SIM" ? `TIPO DE EQUIPAMENTO: ${tipo_equipamento} _____` : ""}
-TAXA DE INSTALAÇÃO: R$${taxa_instalacao} (${parcelas}) _____
+TAXA DE INSTALAÇÃO: R$${taxa_instalacao},00 (${parcelas}) _____
 
 O CONTRATANTE DECLARA PARA TODOS OS FINS DE DIREITO QUE OS
 SERVIÇOS SOLICITADOS FORAM ATIVADOS/INSTALADOS NA PRESENTE DATA,
