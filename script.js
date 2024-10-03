@@ -24,6 +24,27 @@ function removerAcentosECaracteresEspeciais(str) {
 }
 
 function gerarChamado() {
+    const camposObrigatorios = [
+        'ca-ftta-text', 'id', 'pppoe', 'nome_cliente', 
+        'endereco', 'referencia', 'telefone', 'descricao'
+    ];
+
+    const trocaEndereco = document.getElementById('trocaEndereco').checked;
+    // Adiciona os campos CTO próximos se a troca de endereço estiver marcada
+    if (trocaEndereco) {
+        camposObrigatorios.push('cto_proxima_1', 'cto_proxima_2', 'cto_proxima_3');
+    }
+
+    // Verifica se todos os campos obrigatórios estão preenchidos
+    for (const campo of camposObrigatorios) {
+        const valorCampo = document.getElementById(campo).value.trim();
+        if (!valorCampo) {
+            alert(`Não foi gerado o chamado pois o campo "${campo.replace(/_/g, ' ').toUpperCase()}" não está preenchido.`);
+            return; // Não gera o chamado se algum campo obrigatório não estiver preenchido
+        }
+    }
+
+    // Coleta os dados do formulário
     const periodo = document.getElementById('periodo').value.toUpperCase();
     const caFtta = document.getElementById('ca-ftta').value.toUpperCase();
     const caFttaText = removerAcentosECaracteresEspeciais(document.getElementById('ca-ftta-text').value.toUpperCase());
@@ -36,8 +57,6 @@ function gerarChamado() {
     const potencia = removerAcentosECaracteresEspeciais(document.getElementById('potencia').value.toUpperCase());
     const descricao = removerAcentosECaracteresEspeciais(document.getElementById('descricao').value.toUpperCase());
     const prazo = document.getElementById('prazo').value;
-
-    const trocaEndereco = document.getElementById('trocaEndereco').checked;
 
     // Campos adicionais se a troca de endereço for selecionada
     const plano_cliente = removerAcentosECaracteresEspeciais(document.getElementById('plano_cliente').value.toUpperCase());
@@ -91,7 +110,6 @@ QUE TESTOU E APROVOU OS SERVIÇOS CONTRATADOS E DIANTE DISSO O
 CONTRATANTE RENUNCIA O DIREITO DE ARREPENDIMENTO, PREVISTO NO ART. 49
 DA LEI 8078
 `;
-
     } else {
         chamado += `____${custoTexto}____\n`;
     }
@@ -118,6 +136,6 @@ function toggleOpcoesAdicionais() {
 }
 
 function toggleTipoEquipamento() {
-    const tipoEquipamento = document.getElementById('tipoEquipamento');
+    const tipoEquipamento = document.getElementById('tipo_equipamento');
     tipoEquipamento.style.display = document.getElementById('equipamentos_comodato').value === 'SIM' ? 'block' : 'none';
 }
